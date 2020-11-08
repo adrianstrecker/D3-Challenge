@@ -74,7 +74,7 @@ function updateToolTip(chosenXAxis, circlesGroup) {
   }
 
   var toolTip = d3.tip()
-    .attr("class", "tooltip")
+    .attr("class", "d3-tip")
     .offset([80, -60])
     .html(function(d) {
       return (`${d.abbr}`);
@@ -82,7 +82,7 @@ function updateToolTip(chosenXAxis, circlesGroup) {
 
   circlesGroup.call(toolTip);
 
-  circlesGroup.on("mouseover", function(data) {
+  circlesGroup.on("mouseover", function(data, index) {
     toolTip.show(data);
   })
     // onmouseout event
@@ -134,10 +134,13 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
     .attr("cx", d => xLinearScale(d[chosenXAxis]))
     .attr("cy", d => yLinearScale(d.healthcare))
     .attr("r", 15)
-    .attr("fill", "lightblue")
-    .attr("stroke", "white")
-    // .attr("label", `${d.abbr}`)
+    .classed("stateCircle", true)
     .attr("opacity", "1");
+    
+    chartGroup.selectAll("text")
+    .append("text")
+    .classed("stateText", true)
+    .text("Test");
 
   // Create group for two x-axis labels
   var labelsGroup = chartGroup.append("g")
