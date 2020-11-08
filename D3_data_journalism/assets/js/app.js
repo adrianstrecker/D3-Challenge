@@ -56,22 +56,18 @@ function renderCircles(circlesGroup, newXScale, chosenXAxis) {
 
   circlesGroup.transition()
     .duration(1000)
-    .attr("cx", d => newXScale(d[chosenXAxis]));
-
-  // circleLabels.transition()
-  //   .duration(1000)
-  //   .attr("dx", d => newXScale(d[chosenXAxis]));
+    .attr("cx", d => newXScale(d[chosenXAxis]))
 
   return circlesGroup;
 }
 
-// function renderText(circleLabels, newXScale, chosenXAxis) {
-//   circleLabels.transition()
-//     .duration(1000)
-//     .attr("dx", d => newXScale(d[chosenXAxis]));
+function renderText(circleLabels, newXScale, chosenXAxis) {
+  circleLabels.transition()
+    .duration(1000)
+    .attr("dx", d => newXScale(d[chosenXAxis]));
 
-//   return circlesGroup;
-// }
+  return circlesGroup;
+}
 
 
 // function used for updating circles group with new tooltip
@@ -153,7 +149,7 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
     .attr("cy", d => yLinearScale(d.healthcare))
     .attr("r", 15)
     .classed("stateCircle", true)
-    .attr("opacity", ".5")
+    .attr("opacity", "1")
 
   // var circleLabels = 
   circlesGroup.selectAll("text")
@@ -162,7 +158,7 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
     .append("text")
     .attr("dx", d => xLinearScale(d[chosenXAxis]))
     .attr("dy", d => yLinearScale(d.healthcare)+5)
-    // .classed("stateText", true)
+    .classed("stateText", true)
     .text(function(d) {
       return d.abbr;
     });
@@ -221,7 +217,7 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
         // updates circles with new x values
         circles = renderCircles(circles, xLinearScale, chosenXAxis);
 
-        // circleLabels = renderText(chosenXAxis, circleLabels)
+        // circleLabels = renderText(chosenXAxis, circleLabels);
         
         // updates tooltips with new info
         circles = updateToolTip(chosenXAxis, circles);
