@@ -67,26 +67,26 @@ function updateToolTip(chosenXAxis, circlesGroup) {
   var label;
 
   if (chosenXAxis === "poverty") {
-    label = "Hair Length:";
+    label = "In Poverty (%)";
   }
   else {
-    label = "# of Albums:";
+    label = "Age";
   }
 
   var toolTip = d3.tip()
     .attr("class", "d3-tip")
-    .offset([80, -60])
+    .offset([5, 20])
     .html(function(d) {
       return (`${d.abbr}`);
     });
 
   circlesGroup.call(toolTip);
 
-  circlesGroup.on("mouseover", function(data, index) {
-    toolTip.show(data);
+  circlesGroup.on("mouseover", function(data) {
+    toolTip.show(data, this);
   })
     // onmouseout event
-    .on("mouseout", function(data, index) {
+    .on("mouseout", function(data) {
       toolTip.hide(data);
     });
 
@@ -101,7 +101,8 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
   dataInfo.forEach(function(data) {
     data.poverty = +data.poverty;
     data.healthcare = +data.healthcare;
-    data.age = +data.age;
+    data.age = +data.age
+    data.income = +data.income;
   });
 
   // xLinearScale function above csv import
@@ -136,11 +137,6 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
     .attr("r", 15)
     .classed("stateCircle", true)
     .attr("opacity", "1");
-    
-    chartGroup.selectAll("text")
-    .append("text")
-    .classed("stateText", true)
-    .text("Test");
 
   // Create group for two x-axis labels
   var labelsGroup = chartGroup.append("g")
