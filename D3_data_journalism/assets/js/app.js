@@ -61,8 +61,8 @@ function renderCircles(circlesGroup, newXScale, chosenXAxis) {
   return circlesGroup;
 }
 
-function renderText(circleLabels, newXScale, chosenXAxis) {
-  circleLabels.transition()
+function renderText(circlesGroup, newXScale, chosenXAxis) {
+  circlesGroup.transition()
     .duration(1000)
     .attr("dx", d => newXScale(d[chosenXAxis]));
 
@@ -113,6 +113,7 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
     data.healthcare = +data.healthcare;
     data.age = +data.age;
     data.income = +data.income;
+    data.abbr = data.abbr;
   });
 
 
@@ -151,8 +152,7 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
     .classed("stateCircle", true)
     .attr("opacity", "1")
 
-  // var circleLabels = 
-  circlesGroup.selectAll("text")
+  var circleLabels = circlesGroup.selectAll("text")
     .data(dataInfo)
     .enter()
     .append("text")
@@ -194,6 +194,7 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
 
   // updateToolTip function above csv import
   var circles = updateToolTip(chosenXAxis, circles);
+  // var circleLabels = renderText(chosenXAxis, circleLabels);
 
   // x axis labels event listener
   labelsGroup.selectAll("text")
@@ -216,8 +217,7 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
 
         // updates circles with new x values
         circles = renderCircles(circles, xLinearScale, chosenXAxis);
-
-        // circleLabels = renderText(chosenXAxis, circleLabels);
+        circleLabels = renderText(circleLabels, xLinearScale, chosenXAxis);
         
         // updates tooltips with new info
         circles = updateToolTip(chosenXAxis, circles);
