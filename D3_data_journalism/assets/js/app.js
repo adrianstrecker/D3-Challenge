@@ -67,7 +67,7 @@ function updateToolTip(chosenXAxis, circlesGroup) {
   var label;
 
   if (chosenXAxis === "poverty") {
-    label = "In Poverty (%)";
+    label = "Poverty";
   }
   else {
     label = "Age";
@@ -77,7 +77,7 @@ function updateToolTip(chosenXAxis, circlesGroup) {
     .attr("class", "d3-tip")
     .offset([5, 20])
     .html(function(d) {
-      return (`${d.abbr}`);
+      return (`${d.state}<br>Poverty: ${d.poverty}%<br>Obesity: ${d.obesity}%`);
     });
 
   circlesGroup.call(toolTip);
@@ -136,7 +136,14 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
     .attr("cy", d => yLinearScale(d.healthcare))
     .attr("r", 15)
     .classed("stateCircle", true)
-    .attr("opacity", "1");
+    .attr("opacity", "1")
+
+  var circleLabels = circlesGroup.append("text")
+    .text(d => d.abbr)
+    // .attr("dx", d => xLinearScale(d[chosenXAxis]))
+    // .attr("dy", d => xLinearScale(d[chosenYAxis]))
+    .classed("stateText", true);
+      
 
   // Create group for two x-axis labels
   var labelsGroup = chartGroup.append("g")
@@ -190,6 +197,8 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
         // updates circles with new x values
         circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis);
 
+        circleLabels = renderText(chosenXAxis, circleLabels)
+        
         // updates tooltips with new info
         circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
 
