@@ -55,7 +55,7 @@ function renderAxes(newXScale, xAxis) {
 function renderCircles(circlesGroup, newXScale, chosenXAxis) {
 
   circlesGroup.transition()
-    .duration(1000)
+    .duration(800)
     .attr("cx", d => newXScale(d[chosenXAxis]))
 
   return circlesGroup;
@@ -63,7 +63,7 @@ function renderCircles(circlesGroup, newXScale, chosenXAxis) {
 
 function renderText(circlesGroup, newXScale, chosenXAxis) {
   circlesGroup.transition()
-    .duration(1000)
+    .duration(800)
     .attr("dx", d => newXScale(d[chosenXAxis]));
 
   return circlesGroup;
