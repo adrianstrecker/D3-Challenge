@@ -138,11 +138,14 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
     .classed("stateCircle", true)
     .attr("opacity", "1")
 
-  var circleLabels = circlesGroup.append("text")
-    .text(d => d.abbr)
+  var circleLabels = svg.selectAll("text")
+    .data(dataInfo)
+    .enter()
+    .append("text")
     .attr("dx", d => xLinearScale(d[chosenXAxis]))
-    // .attr("dy", d => xLinearScale(d[chosenYAxis]))
-    .classed("stateText", true);
+    .attr("dy", d => yLinearScale(d.healthcare))
+    .classed("stateText", true)
+    .text(d => d.abbr);
       
 
   // Create group for two x-axis labels
@@ -161,7 +164,7 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
     .attr("y", 40)
     .attr("value", "age") // value to grab for event listener
     .classed("inactive", true)
-    .text("Age");
+    .text("Age (Median)");
 
   // append y axis
   chartGroup.append("text")
@@ -197,7 +200,7 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
         // updates circles with new x values
         circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis);
 
-        // circleLabels = renderText(circleLabels, xLinearScale,chosenXAxis)
+        // circleLabels = renderXText(circleLabels, xLinearScale,chosenXAxis)
         
         // updates tooltips with new info
         circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
