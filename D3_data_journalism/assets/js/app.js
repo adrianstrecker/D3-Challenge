@@ -24,14 +24,14 @@ var chartGroup = svg.append("g")
   .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
 // Initial Params
-var chosenXAxis = "hair_length";
+var chosenXAxis = "poverty";
 
 // function used for updating x-scale var upon click on axis label
-function xScale(hairData, chosenXAxis) {
+function xScale(dataInfo, chosenXAxis) {
   // create scales
   var xLinearScale = d3.scaleLinear()
-    .domain([d3.min(hairData, d => d[chosenXAxis]) * 0.8,
-      d3.max(hairData, d => d[chosenXAxis]) * 1.2
+    .domain([d3.min(dataInfo, d => d[chosenXAxis]) * 0.8,
+      d3.max(dataInfo, d => d[chosenXAxis]) * 1.2
     ])
     .range([0, width]);
 
@@ -66,7 +66,7 @@ function updateToolTip(chosenXAxis, circlesGroup) {
 
   var label;
 
-  if (chosenXAxis === "hair_length") {
+  if (chosenXAxis === "poverty") {
     label = "Hair Length:";
   }
   else {
@@ -94,23 +94,22 @@ function updateToolTip(chosenXAxis, circlesGroup) {
 }
 
 // Retrieve data from the CSV file and execute everything below
-d3.csv("assets/js/data.csv").then(function(DataInfo) {
-  console.log(DataInfo)
+d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
+  if (err) throw err;
 
   // parse data
-  DataInfo.forEach(function(data) {
+  dataInfo.forEach(function(data) {
     data.poverty = +data.poverty;
-    data.income = +data.income;
-    data.smokes = +data.smokes;
     data.healthcare = +data.healthcare;
+    data.num_albums = +data.num_albums;
   });
 
   // xLinearScale function above csv import
-  var xLinearScale = xScale(DataInfo, chosenXAxis);
+  var xLinearScale = xScale(dataInfo, chosenXAxis);
 
   // Create y scale function
   var yLinearScale = d3.scaleLinear()
-    .domain([0, d3.max(DataInfo, d => d.num_hits)])
+    .domain([0, d3.max(dataInfo, d => d.healthcare)])
     .range([height, 0]);
 
   // Create initial axis functions
@@ -129,7 +128,7 @@ d3.csv("assets/js/data.csv").then(function(DataInfo) {
 
   // append initial circles
   var circlesGroup = chartGroup.selectAll("circle")
-    .data(DataInfo)
+    .data(dataInfo)
     .enter()
     .append("circle")
     .attr("cx", d => xLinearScale(d[chosenXAxis]))
@@ -145,7 +144,7 @@ d3.csv("assets/js/data.csv").then(function(DataInfo) {
   var hairLengthLabel = labelsGroup.append("text")
     .attr("x", 0)
     .attr("y", 20)
-    .attr("value", "hair_length") // value to grab for event listener
+    .attr("value", "poverty") // value to grab for event listener
     .classed("active", true)
     .text("Hair Metal Ban Hair Length (inches)");
 
@@ -182,7 +181,7 @@ d3.csv("assets/js/data.csv").then(function(DataInfo) {
 
         // functions here found above csv import
         // updates x scale for new data
-        xLinearScale = xScale(DataInfo, chosenXAxis);
+        xLinearScale = xScale(dataInfo, chosenXAxis);
 
         // updates x axis with transition
         xAxis = renderAxes(xLinearScale, xAxis);
