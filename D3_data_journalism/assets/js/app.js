@@ -140,7 +140,7 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
 
   var circleLabels = circlesGroup.append("text")
     .text(d => d.abbr)
-    // .attr("dx", d => xLinearScale(d[chosenXAxis]))
+    .attr("dx", d => xLinearScale(d[chosenXAxis]))
     // .attr("dy", d => xLinearScale(d[chosenYAxis]))
     .classed("stateText", true);
       
@@ -197,7 +197,7 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
         // updates circles with new x values
         circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis);
 
-        circleLabels = renderText(chosenXAxis, circleLabels)
+        // circleLabels = renderText(circleLabels, xLinearScale,chosenXAxis)
         
         // updates tooltips with new info
         circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
