@@ -40,15 +40,35 @@ function xScale(dataInfo, chosenXAxis) {
 
 }
 
+function yScale(dataInfo, chosenYAxis) {
+  // create scales
+  var yLinearScale = d3.scaleLinear()
+    .domain([0, d3.max(dataInfo, d => d[chosenYAxis])+2])
+    .range([height, 0]);
+
+  return yLinearScale;
+
+}
+
 // function used for updating xAxis var upon click on axis label
-function renderAxes(newXScale, xAxis) {
+function renderXAxes(newXScale, xAxis) {
   var bottomAxis = d3.axisBottom(newXScale);
 
   xAxis.transition()
-    .duration(1000)
+    .duration(800)
     .call(bottomAxis);
 
   return xAxis;
+}
+
+function renderYAxes(newYScale, yAxis) {
+  var leftAxis = d3.axisBottom(newYScale);
+
+  yAxis.transition()
+    .duration(800)
+    .call(leftAxis);
+
+  return yAxis;
 }
 
 // function used for updating circles group with a transition to
@@ -62,7 +82,7 @@ function renderCircles(circlesGroup, newXScale, chosenXAxis) {
   return circlesGroup;
 }
 
-function renderText(circlesGroup, newXScale, chosenXAxis) {
+function renderXText(circlesGroup, newXScale, chosenXAxis) {
   circlesGroup.transition()
     .duration(800)
     .attr("dx", d => newXScale(d[chosenXAxis]));
@@ -117,7 +137,7 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
     data.healthcare = +data.healthcare;
     data.age = +data.age;
     data.income = +data.income;
-    data.smoke = +data.smoke;
+    data.smokes = +data.smokes;
     data.obesity = +data.obesity;
   });
 
@@ -127,7 +147,7 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
 
   // Create y scale function
   var yLinearScale = d3.scaleLinear()
-    .domain([0, d3.max(dataInfo, d => d.healthcare)+2])
+    .domain([0, d3.max(dataInfo, d => d[chosenYAxis])+2])
     .range([height, 0]);
 
   // Create initial axis functions
@@ -141,7 +161,7 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
     .call(bottomAxis);
 
   // append y axis
-  chartGroup.append("g")
+  var yAxis = chartGroup.append("g")
     .call(leftAxis);
 
   // append initial circles
@@ -152,8 +172,8 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
 
   var circles = circlesGroup.append("circle")
     .attr("cx", d => xLinearScale(d[chosenXAxis]))
-    .attr("cy", d => yLinearScale(d.healthcare))
-    .attr("r", 10)
+    .attr("cy", d => yLinearScale(d[chosenYAxis]))
+    .attr("r", 13)
     .classed("stateCircle", true)
     .attr("opacity", "1")
 
@@ -162,7 +182,7 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
     .enter()
     .append("text")
     .attr("dx", d => xLinearScale(d[chosenXAxis]))
-    .attr("dy", d => yLinearScale(d.healthcare)+3)
+    .attr("dy", d => yLinearScale(d[chosenYAxis])+3)
     .classed("stateText", true)
     .text(function(d) {
       return d.abbr;
@@ -230,7 +250,7 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
 
   // updateToolTip function above csv import
   var circles = updateToolTip(chosenXAxis, circles);
-  // var circleLabels = renderText(chosenXAxis, circleLabels);
+  
 
   // x axis labels event listener
   xLabelsGroup.selectAll("text")
@@ -249,11 +269,11 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
         xLinearScale = xScale(dataInfo, chosenXAxis);
 
         // updates x axis with transition
-        xAxis = renderAxes(xLinearScale, xAxis);
+        xAxis = renderXAxes(xLinearScale, xAxis);
 
         // updates circles with new x values
         circles = renderCircles(circles, xLinearScale, chosenXAxis);
-        circleLabels = renderText(circleLabels, xLinearScale, chosenXAxis);
+        circleLabels = renderXText(circleLabels, xLinearScale, chosenXAxis);
         
         // updates tooltips with new info
         circles = updateToolTip(chosenXAxis, circles);
@@ -294,6 +314,69 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
         }
       }
     });
+
+  yLabelsGroup.selectAll("text")
+    .on("click", function() {
+      // get value of selection
+      var value = d3.select(this).attr("value");
+      if (value !== chosenYAxis) {
+
+        // replaces chosenYAxis with value
+        chosenYAxis = value;
+
+        // console.log(chosenYAxis)
+
+        // functions here found above csv import
+        // updates x scale for new data
+        yLinearScale = yScale(dataInfo, chosenYAxis);
+
+        // updates x axis with transition
+        yAxis = renderYAxes(yLinearScale, yAxis);
+
+        // updates circles with new x values
+        circles = renderCircles(circles, yLinearScale, chosenYAxis);
+        circleLabels = renderYText(circleLabels, yLinearScale, chosenYAxis);
+        
+        // updates tooltips with new info
+        circles = updateToolTip(chosenYAxis, circles);
+
+        // changes classes to change bold text
+        if (chosenYAxis === "healthcare") {
+          healthcareLabel
+            .classed("active", true)
+            .classed("inactive", false);
+          smokesLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          obeseLabel
+            .classed("active", false)
+            .classed("inactive", true);
+        }
+        else if (chosenYAxis === "obese") {
+          healthcareLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          smokesLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          obeseLabel
+            .classed("active", true)
+            .classed("inactive", false);
+        }
+        else {
+          healthcareLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          smokesLabel
+            .classed("active", true)
+            .classed("inactive", false);
+          obeseLabel
+            .classed("active", false)
+            .classed("inactive", true)
+        }
+      }
+    });
+
 }).catch(function(error) {
   console.log(error);
 });
