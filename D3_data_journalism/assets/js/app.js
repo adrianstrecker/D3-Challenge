@@ -199,7 +199,7 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
     .attr("y", 0 - margin.left)
     .attr("x", 0 - (height / 2))
     .attr("dy", "1em")
-    .classed("axis-text", true)
+    .classed("aText", true)
     .text("Lacks Healthcare (%)");
 
   // updateToolTip function above csv import
