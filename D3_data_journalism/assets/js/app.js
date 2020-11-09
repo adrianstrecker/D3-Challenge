@@ -153,7 +153,7 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
   var circles = circlesGroup.append("circle")
     .attr("cx", d => xLinearScale(d[chosenXAxis]))
     .attr("cy", d => yLinearScale(d.healthcare))
-    .attr("r", 15)
+    .attr("r", 10)
     .classed("stateCircle", true)
     .attr("opacity", "1")
 
@@ -162,7 +162,7 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
     .enter()
     .append("text")
     .attr("dx", d => xLinearScale(d[chosenXAxis]))
-    .attr("dy", d => yLinearScale(d.healthcare)+4)
+    .attr("dy", d => yLinearScale(d.healthcare)+3)
     .classed("stateText", true)
     .text(function(d) {
       return d.abbr;
