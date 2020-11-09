@@ -1,5 +1,5 @@
-var svgWidth = 1200;
-var svgHeight = 700;
+var svgWidth = 900;
+var svgHeight = 500;
 
 var margin = {
   top: 20,
@@ -157,7 +157,7 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
     .enter()
     .append("text")
     .attr("dx", d => xLinearScale(d[chosenXAxis]))
-    .attr("dy", d => yLinearScale(d.healthcare)+5)
+    .attr("dy", d => yLinearScale(d.healthcare)+4)
     .classed("stateText", true)
     .text(function(d) {
       return d.abbr;
