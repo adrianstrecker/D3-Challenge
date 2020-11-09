@@ -14,63 +14,72 @@ var margin = {
 var width = svgWidth - margin.left - margin.right;
 var height = svgHeight - margin.top - margin.bottom;
 
-// Create an SVG wrapper, append an SVG group that will hold our chart,
-// and shift the latter by left and top margins.
+  // ------------------ //
+ // Create SVG wrapper //
+// ------------------ //
 var svg = d3
   .select("#scatter")
   .append("svg")
   .attr("width", svgWidth)
   .attr("height", svgHeight);
 
-// Append an SVG group
+  // ------------------- //
+ // Append an SVG group //
+// ------------------- //
 var chartGroup = svg.append("g")
   .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-// Initial Params
+  // ------------------ //
+ // Initial Parameters //
+// ------------------ //
 var chosenXAxis = "poverty";
 var chosenYAxis = "healthcare";
 
-// function used for updating x-scale var upon click on axis label
+  // ------------------------------------------------------------------------------ //
+ // Create function used for updating x-scale variable upon clicking on axis label //
+// ------------------------------------------------------------------------------ //
 function xScale(dataInfo, chosenXAxis) {
-  // create scales
+  // Create x-scale
   var xLinearScale = d3.scaleLinear()
     .domain([d3.min(dataInfo, d => d[chosenXAxis]) * 0.8,
       d3.max(dataInfo, d => d[chosenXAxis]) * 1.2
     ])
     .range([0, width]);
-
   return xLinearScale;
-
 }
 
+  // ------------------------------------------------------------------------------ //
+ // Create function used for updating y-scale variable upon clicking on axis label //
+// ------------------------------------------------------------------------------ //
 function yScale(dataInfo, chosenYAxis) {
-  // create scales
+  // Create y-scale
   var yLinearScale = d3.scaleLinear()
     .domain([d3.min(dataInfo, d => d[chosenYAxis] - 2), d3.max(dataInfo, d => d[chosenYAxis])+2])
     .range([height, 0]);
-
   return yLinearScale;
-
 }
 
-// function used for updating xAxis var upon click on axis label
+  // ------------------------------------------------------------------------- //
+ // Create function used for updating xAxis variable upon click on axis label //
+// ------------------------------------------------------------------------- //
 function renderXAxes(newXScale, xAxis) {
   var bottomAxis = d3.axisBottom(newXScale);
-
+  // Transition xAxis
   xAxis.transition()
     .duration(800)
     .call(bottomAxis);
-
   return xAxis;
 }
 
+  // ------------------------------------------------------------------------- //
+ // Create function used for updating yAxis variable upon click on axis label //
+// ------------------------------------------------------------------------- //
 function renderYAxes(newYScale, yAxis) {
   var leftAxis = d3.axisLeft(newYScale);
-
+  // Transition yAxis
   yAxis.transition()
     .duration(800)
     .call(leftAxis);
-
   return yAxis;
 }
 
