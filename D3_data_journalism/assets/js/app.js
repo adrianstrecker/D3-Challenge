@@ -43,7 +43,7 @@ function xScale(dataInfo, chosenXAxis) {
 function yScale(dataInfo, chosenYAxis) {
   // create scales
   var yLinearScale = d3.scaleLinear()
-    .domain([0, d3.max(dataInfo, d => d[chosenYAxis])+2])
+    .domain([d3.min(dataInfo, d => d[chosenYAxis]), d3.max(dataInfo, d => d[chosenYAxis])+2])
     .range([height, 0]);
 
   return yLinearScale;
@@ -62,7 +62,7 @@ function renderXAxes(newXScale, xAxis) {
 }
 
 function renderYAxes(newYScale, yAxis) {
-  var leftAxis = d3.axisBottom(newYScale);
+  var leftAxis = d3.axisLeft(newYScale);
 
   yAxis.transition()
     .duration(800)
