@@ -25,6 +25,7 @@ var chartGroup = svg.append("g")
 
 // Initial Params
 var chosenXAxis = "poverty";
+var chosenYAxis = "healthcare";
 
 // function used for updating x-scale var upon click on axis label
 function xScale(dataInfo, chosenXAxis) {
@@ -76,13 +77,13 @@ function updateToolTip(chosenXAxis, circlesGroup) {
   var label;
 
   if (chosenXAxis === "poverty") {
-    label = "Poverty";
+    label = "poverty";
   }
   else if (chosenXAxis === "income") {
-    label = "Income";
+    label = "income";
   }
   else {
-    label = "Age";
+    label = "age";
   }
 
   var toolTip = d3.tip()
@@ -194,27 +195,33 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
     .text("Household Income (Median)");
 
   // append y axis
-  chartGroup.append("text")
+  var healthcareLabel = chartGroup.append("text")
     .attr("transform", "rotate(-90)")
     .attr("y", 0 - margin.left+50)
     .attr("x", 0 - (height / 2))
     .attr("dy", "1em")
+    .attr("value", "healthcare")
+    .classed("active", true)
     .classed("aText", true)
     .text("Lacks Healthcare (%)");
 
-  chartGroup.append("text")
+  var smokesLabel = chartGroup.append("text")
     .attr("transform", "rotate(-90)")
     .attr("y", 0 - margin.left+25)
     .attr("x", 0 - (height / 2))
     .attr("dy", "1em")
+    .attr("value", "smokes")
+    .classed("inactive", true)
     .classed("aText", true)
     .text("Smokes (%)");
 
-  chartGroup.append("text")
+  var obeseLabel = chartGroup.append("text")
     .attr("transform", "rotate(-90)")
     .attr("y", 0 - margin.left)
     .attr("x", 0 - (height / 2))
     .attr("dy", "1em")
+    .attr("value", "obese")
+    .classed("inactive", true)
     .classed("aText", true)
     .text("Obese (%)");
 
@@ -260,7 +267,7 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
             .classed("active", false)
             .classed("inactive", true);
         }
-        if (chosenXAxis === "income") {
+        else if (chosenXAxis === "income") {
           ageLabel
             .classed("active", false)
             .classed("inactive", true);
