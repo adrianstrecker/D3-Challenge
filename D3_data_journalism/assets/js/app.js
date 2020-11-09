@@ -117,7 +117,8 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
     data.healthcare = +data.healthcare;
     data.age = +data.age;
     data.income = +data.income;
-    data.abbr = data.abbr;
+    data.smoke = +data.smoke;
+    data.obesity = +data.obesity;
   });
 
 
@@ -170,24 +171,24 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
       
 
   // Create group for two x-axis labels
-  var labelsGroup = chartGroup.append("g")
+  var xLabelsGroup = chartGroup.append("g")
     .attr("transform", `translate(${width / 2}, ${height + 20})`);
 
-  var povertyLabel = labelsGroup.append("text")
+  var povertyLabel = xLabelsGroup.append("text")
     .attr("x", 0)
     .attr("y", 20)
     .attr("value", "poverty") // value to grab for event listener
     .classed("active", true)
     .text("In Poverty(%)");
 
-  var ageLabel = labelsGroup.append("text")
+  var ageLabel = xLabelsGroup.append("text")
     .attr("x", 0)
     .attr("y", 40)
     .attr("value", "age") // value to grab for event listener
     .classed("inactive", true)
     .text("Age (Median)");
 
-  var incomeLabel = labelsGroup.append("text")
+  var incomeLabel = xLabelsGroup.append("text")
     .attr("x", 0)
     .attr("y", 60)
     .attr("value", "income") // value to grab for event listener
@@ -195,7 +196,9 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
     .text("Household Income (Median)");
 
   // append y axis
-  var healthcareLabel = chartGroup.append("text")
+  var yLabelsGroup = chartGroup.append("g");
+
+  var healthcareLabel = yLabelsGroup.append("text")
     .attr("transform", "rotate(-90)")
     .attr("y", 0 - margin.left+50)
     .attr("x", 0 - (height / 2))
@@ -205,7 +208,7 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
     .classed("aText", true)
     .text("Lacks Healthcare (%)");
 
-  var smokesLabel = chartGroup.append("text")
+  var smokesLabel = yLabelsGroup.append("text")
     .attr("transform", "rotate(-90)")
     .attr("y", 0 - margin.left+25)
     .attr("x", 0 - (height / 2))
@@ -215,7 +218,7 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
     .classed("aText", true)
     .text("Smokes (%)");
 
-  var obeseLabel = chartGroup.append("text")
+  var obeseLabel = yLabelsGroup.append("text")
     .attr("transform", "rotate(-90)")
     .attr("y", 0 - margin.left)
     .attr("x", 0 - (height / 2))
@@ -230,7 +233,7 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
   // var circleLabels = renderText(chosenXAxis, circleLabels);
 
   // x axis labels event listener
-  labelsGroup.selectAll("text")
+  xLabelsGroup.selectAll("text")
     .on("click", function() {
       // get value of selection
       var value = d3.select(this).attr("value");
