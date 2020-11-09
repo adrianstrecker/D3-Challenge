@@ -196,11 +196,27 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
   // append y axis
   chartGroup.append("text")
     .attr("transform", "rotate(-90)")
-    .attr("y", 0 - margin.left)
+    .attr("y", 0 - margin.left+50)
     .attr("x", 0 - (height / 2))
     .attr("dy", "1em")
     .classed("aText", true)
     .text("Lacks Healthcare (%)");
+
+  chartGroup.append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("y", 0 - margin.left+25)
+    .attr("x", 0 - (height / 2))
+    .attr("dy", "1em")
+    .classed("aText", true)
+    .text("Smokes (%)");
+
+  chartGroup.append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("y", 0 - margin.left)
+    .attr("x", 0 - (height / 2))
+    .attr("dy", "1em")
+    .classed("aText", true)
+    .text("Obese (%)");
 
   // updateToolTip function above csv import
   var circles = updateToolTip(chosenXAxis, circles);
