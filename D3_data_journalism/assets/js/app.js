@@ -90,6 +90,13 @@ function renderXText(circlesGroup, newXScale, chosenXAxis) {
   return circlesGroup;
 }
 
+function renderYText(circlesGroup, newYScale, chosenYAxis) {
+  circlesGroup.transition()
+    .duration(800)
+    .attr("dy", d => newYScale(d[chosenYAxis]));
+
+  return circlesGroup;
+}
 
 // function used for updating circles group with new tooltip
 function updateToolTip(chosenXAxis, circlesGroup) {
@@ -243,7 +250,7 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
     .attr("y", 0 - margin.left)
     .attr("x", 0 - (height / 2))
     .attr("dy", "1em")
-    .attr("value", "obese")
+    .attr("value", "obesity")
     .classed("inactive", true)
     .classed("aText", true)
     .text("Obese (%)");
@@ -352,7 +359,7 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
             .classed("active", false)
             .classed("inactive", true);
         }
-        else if (chosenYAxis === "obese") {
+        else if (chosenYAxis === "obesity") {
           healthcareLabel
             .classed("active", false)
             .classed("inactive", true);
