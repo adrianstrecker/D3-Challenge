@@ -130,10 +130,10 @@ function renderYText(circlesGroup, newYScale, chosenYAxis) {
   // -------------------------------------------------------- //
  // Create function to update circles group with new tooltip //
 // -------------------------------------------------------- //
-function updateToolTip(chosenXAxis, circles) {
-
+function updatetooltip(chosenXAxis, circles) {
+  // Create label variable for axis changes
   var label;
-
+  // 
   if (chosenXAxis === "poverty") {
     label = "poverty";
   }
@@ -143,27 +143,25 @@ function updateToolTip(chosenXAxis, circles) {
   else {
     label = "age";
   }
-
-  var toolTip = d3.tip()
+  // Style tooltip
+  var tooltip = d3.tip()
     .attr("class", "d3-tip")
     .offset([5, 20])
     .html(function(d) {
       return (`${d.state}<br>Poverty: ${d.poverty}%<br>Obesity: ${d.obesity}%`);
     });
-
-  circles.call(toolTip);
+  // Call tooltip on selection
+  circles.call(tooltip);
   
-
+  // Show tooltip on hover/mouseover  
   circles.on("mouseover", function(data) {
-    toolTip.show(data, this);
+    tooltip.show(data, this);
   })
-    // onmouseout event
+    // Hide tooltip onmouseout
     .on("mouseout", function(data) {
-      toolTip.hide(data);
+      tooltip.hide(data);
     });
-
-  return circles;
-  
+  return circles; 
 }
 
 
@@ -287,8 +285,8 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
     .classed("aText", true)
     .text("Obese (%)");
 
-  // updateToolTip function above csv import
-  var circles = updateToolTip(chosenXAxis, circles);
+  // updatetooltip function above csv import
+  var circles = updatetooltip(chosenXAxis, circles);
   
 
   // x axis labels event listener
@@ -315,7 +313,7 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
         circleLabels = renderXText(circleLabels, xLinearScale, chosenXAxis);
         
         // updates tooltips with new info
-        circles = updateToolTip(chosenXAxis, circles);
+        circles = updatetooltip(chosenXAxis, circles);
 
         // changes classes to change bold text
         if (chosenXAxis === "age") {
@@ -377,7 +375,7 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
         circleLabels = renderYText(circleLabels, yLinearScale, chosenYAxis);
         
         // updates tooltips with new info
-        circles = updateToolTip(chosenYAxis, circles);
+        circles = updatetooltip(chosenYAxis, circles);
 
         // changes classes to change bold text
         if (chosenYAxis === "smokes") {
