@@ -43,7 +43,7 @@ function xScale(dataInfo, chosenXAxis) {
 function yScale(dataInfo, chosenYAxis) {
   // create scales
   var yLinearScale = d3.scaleLinear()
-    .domain([d3.min(dataInfo, d => d[chosenYAxis]), d3.max(dataInfo, d => d[chosenYAxis])+2])
+    .domain([d3.min(dataInfo, d => d[chosenYAxis] - 2), d3.max(dataInfo, d => d[chosenYAxis])+2])
     .range([height, 0]);
 
   return yLinearScale;
@@ -93,7 +93,7 @@ function renderXText(circlesGroup, newXScale, chosenXAxis) {
 function renderYText(circlesGroup, newYScale, chosenYAxis) {
   circlesGroup.transition()
     .duration(800)
-    .attr("dy", d => newYScale(d[chosenYAxis]));
+    .attr("dy", d => newYScale(d[chosenYAxis])+5);
 
   return circlesGroup;
 }
@@ -154,7 +154,7 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
 
   // Create y scale function
   var yLinearScale = d3.scaleLinear()
-    .domain([0, d3.max(dataInfo, d => d[chosenYAxis])+2])
+    .domain([d3.min(dataInfo, d => d[chosenYAxis]) - 2, d3.max(dataInfo, d => d[chosenYAxis])+2])
     .range([height, 0]);
 
   // Create initial axis functions
