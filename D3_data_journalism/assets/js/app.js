@@ -157,20 +157,21 @@ function updatetooltip(chosenXAxis, circles) {
   circles.on("mouseover", function(data) {
     tooltip.show(data, this);
   })
-    // Hide tooltip onmouseout
+    // Hide tooltip on mouseout
     .on("mouseout", function(data) {
       tooltip.hide(data);
     });
   return circles; 
 }
 
-
-// Retrieve data from the CSV file and execute everything below
+  // --------------------------------------------------------------- //
+ // Retrieve/read data from the CSV file & execute everything below //
+// --------------------------------------------------------------- //
 d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
   if (err) throw err;
   
 
-  // parse data
+   // Parse data to ensure numbers are read correctly
   dataInfo.forEach(function(data) {
     data.poverty = +data.poverty;
     data.healthcare = +data.healthcare;
@@ -181,32 +182,31 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
   });
 
 
-  // xLinearScale function above csv import
+  // LinearScale functions above csv import
   var xLinearScale = xScale(dataInfo, chosenXAxis);
-
-  // Create y scale function
   var yLinearScale = yScale(dataInfo, chosenYAxis)
 
   // Create initial axis functions
   var bottomAxis = d3.axisBottom(xLinearScale);
   var leftAxis = d3.axisLeft(yLinearScale);
 
-  // append x axis
+  // Append x-axis
   var xAxis = chartGroup.append("g")
     .classed("x-axis", true)
     .attr("transform", `translate(0, ${height})`)
     .call(bottomAxis);
 
-  // append y axis
+  // Append y-axis
   var yAxis = chartGroup.append("g")
     .call(leftAxis);
 
-  // append initial circles
+  // Append initial circles
   var circlesGroup = chartGroup.selectAll("g circle")
     .data(dataInfo)
     .enter()
     .append("g")
 
+  // Create circles
   var circles = circlesGroup.append("circle")
     .attr("cx", d => xLinearScale(d[chosenXAxis]))
     .attr("cy", d => yLinearScale(d[chosenYAxis]))
@@ -214,6 +214,7 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
     .classed("stateCircle", true)
     .attr("opacity", "1")
 
+  // Create text to display in circles
   var circleLabels = circlesGroup.selectAll("text")
     .data(dataInfo)
     .enter()
@@ -225,12 +226,11 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
       return d.abbr;
     });
     
-      
-
-  // Create group for two x-axis labels
+  // Create group for x-axis labels
   var xLabelsGroup = chartGroup.append("g")
     .attr("transform", `translate(${width / 2}, ${height + 20})`);
 
+  // Create x-axis labels
   var povertyLabel = xLabelsGroup.append("text")
     .attr("x", 0)
     .attr("y", 20)
@@ -252,9 +252,10 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
     .classed("inactive", true)
     .text("Household Income (Median)");
 
-  // append y axis
+  // Create group for y-axis labels
   var yLabelsGroup = chartGroup.append("g");
 
+  // Create y-axis labels
   var healthcareLabel = yLabelsGroup.append("text")
     .attr("transform", "rotate(-90)")
     .attr("y", 0 - margin.left+50)
@@ -285,37 +286,37 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
     .classed("aText", true)
     .text("Obese (%)");
 
-  // updatetooltip function above csv import
+  // Updatetooltip function above CSV import
   var circles = updatetooltip(chosenXAxis, circles);
   
 
-  // x axis labels event listener
+  // X-axis labels event listener
   xLabelsGroup.selectAll("text")
     .on("click", function() {
-      // get value of selection
+      // Get value of selection
       var value = d3.select(this).attr("value");
       if (value !== chosenXAxis) {
 
-        // replaces chosenXAxis with value
+        // Replaces chosenXAxis with value
         chosenXAxis = value;
 
         // console.log(chosenXAxis)
 
-        // functions here found above csv import
-        // updates x scale for new data
+        // Functions here found above CSV import
+        // Updates xScale for new data
         xLinearScale = xScale(dataInfo, chosenXAxis);
 
-        // updates x axis with transition
+        // Updates x-axis with transition
         xAxis = renderXAxes(xLinearScale, xAxis);
 
-        // updates circles with new x values
+        // Updates circles with new x values
         circles = renderXCircles(circles, xLinearScale, chosenXAxis);
         circleLabels = renderXText(circleLabels, xLinearScale, chosenXAxis);
         
-        // updates tooltips with new info
+        // Updates tooltips with new info
         circles = updatetooltip(chosenXAxis, circles);
 
-        // changes classes to change bold text
+        // Changes classes to change bold text
         if (chosenXAxis === "age") {
           ageLabel
             .classed("active", true)
@@ -352,32 +353,33 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
       }
     });
 
+  // Y-axis labels event listener
   yLabelsGroup.selectAll("text")
     .on("click", function() {
-      // get value of selection
+      // Get value of selection
       var value = d3.select(this).attr("value");
       if (value !== chosenYAxis) {
 
-        // replaces chosenYAxis with value
+        // Replaces chosenYAxis with value
         chosenYAxis = value;
 
         // console.log(chosenYAxis)
 
-        // functions here found above csv import
-        // updates x scale for new data
+        // Functions here found above CSV import
+        // Updates yScale for new data
         yLinearScale = yScale(dataInfo, chosenYAxis);
 
-        // updates x axis with transition
+        // Updates y-axis with transition
         yAxis = renderYAxes(yLinearScale, yAxis);
 
-        // updates circles with new x values
+        // Updates circles with new y values
         circles = renderYCircles(circles, yLinearScale, chosenYAxis);
         circleLabels = renderYText(circleLabels, yLinearScale, chosenYAxis);
         
-        // updates tooltips with new info
+        // Updates tooltips with new info
         circles = updatetooltip(chosenYAxis, circles);
 
-        // changes classes to change bold text
+        // Changes classes to change bold text
         if (chosenYAxis === "smokes") {
           smokesLabel
             .classed("active", true)
