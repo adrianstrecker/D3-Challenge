@@ -1,3 +1,6 @@
+  // ------------ //
+ // Set up chart //
+// ------------ //
 var svgWidth = 900;
 var svgHeight = 500;
 
