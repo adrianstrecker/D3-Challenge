@@ -78,6 +78,9 @@ function updateToolTip(chosenXAxis, circlesGroup) {
   if (chosenXAxis === "poverty") {
     label = "Poverty";
   }
+  else if (chosenXAxis === "income") {
+    label = "Income";
+  }
   else {
     label = "Age";
   }
@@ -183,6 +186,13 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
     .classed("inactive", true)
     .text("Age (Median)");
 
+  var incomeLabel = labelsGroup.append("text")
+    .attr("x", 0)
+    .attr("y", 60)
+    .attr("value", "income") // value to grab for event listener
+    .classed("inactive", true)
+    .text("Household Income (Median)");
+
   // append y axis
   chartGroup.append("text")
     .attr("transform", "rotate(-90)")
@@ -230,6 +240,20 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
           povertyLabel
             .classed("active", false)
             .classed("inactive", true);
+          incomeLabel
+            .classed("active", false)
+            .classed("inactive", true);
+        }
+        if (chosenXAxis === "income") {
+          ageLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          povertyLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          incomeLabel
+            .classed("active", true)
+            .classed("inactive", false);
         }
         else {
           ageLabel
@@ -238,6 +262,9 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
           povertyLabel
             .classed("active", true)
             .classed("inactive", false);
+          incomeLabel
+            .classed("active", false)
+            .classed("inactive", true)
         }
       }
     });
