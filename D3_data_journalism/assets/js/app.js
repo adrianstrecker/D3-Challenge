@@ -83,26 +83,30 @@ function renderYAxes(newYScale, yAxis) {
   return yAxis;
 }
 
-// function used for updating circles group with a transition to
-// new circles
+  // ------------------------------------------------------ //
+ // Create function to render circles on x-axis transition //
+// ------------------------------------------------------ //
 function renderXCircles(circlesGroup, newXScale, chosenXAxis) {
-
+  // Transition circles on x-axis
   circlesGroup.transition()
     .duration(800)
     .attr("cx", d => newXScale(d[chosenXAxis]))
-
   return circlesGroup;
 }
-function renderYCircles(circlesGroup, newYScale, chosenYAxis) {
 
+  // ------------------------------------------------------ //
+ // Create function to render circles on y-axis transition //
+// ------------------------------------------------------ //
+function renderYCircles(circlesGroup, newYScale, chosenYAxis) {
+  // Transition circles on y-axis
   circlesGroup.transition()
     .duration(800)
     .attr("cy", d => newYScale(d[chosenYAxis]))
-
   return circlesGroup;
 }
 
-
+ // Create function to render text on x-axis transition
+//
 function renderXText(circlesGroup, newXScale, chosenXAxis) {
   circlesGroup.transition()
     .duration(800)
