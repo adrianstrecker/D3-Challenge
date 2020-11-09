@@ -105,25 +105,31 @@ function renderYCircles(circlesGroup, newYScale, chosenYAxis) {
   return circlesGroup;
 }
 
- // Create function to render text on x-axis transition
-//
+  // --------------------------------------------------- //
+ // Create function to render text on x-axis transition //
+// --------------------------------------------------- //
 function renderXText(circlesGroup, newXScale, chosenXAxis) {
+  // Transition text on x-axis
   circlesGroup.transition()
     .duration(800)
     .attr("dx", d => newXScale(d[chosenXAxis]));
-
   return circlesGroup;
 }
 
+  // --------------------------------------------------- //
+ // Create function to render text on y-axis transition //
+// --------------------------------------------------- //
 function renderYText(circlesGroup, newYScale, chosenYAxis) {
+  // Transition text on y-axis
   circlesGroup.transition()
     .duration(800)
     .attr("dy", d => newYScale(d[chosenYAxis])+5);
-
   return circlesGroup;
 }
 
-// function used for updating circles group with new tooltip
+  // -------------------------------------------------------- //
+ // Create function to update circles group with new tooltip //
+// -------------------------------------------------------- //
 function updateToolTip(chosenXAxis, circles) {
 
   var label;
