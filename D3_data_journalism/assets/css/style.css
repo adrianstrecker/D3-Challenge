@@ -19,6 +19,16 @@ body {
   background-color: #65656524;
 }
 
+hr {
+  margin-top: 0rem;
+  margin-bottom: 1rem;
+  border: 0;
+  border-top: 1px solid rgb(0 0 0 / 53%);
+  box-sizing: content-box;
+  height: 0;
+  overflow: visible;
+}
+
 .c-navbar {
   position: relative;
   display: -ms-flexbox;
@@ -32,6 +42,7 @@ body {
   padding-left: 1%;
   padding-top: .5%;
   font-family: 'Cinzel', cursive;
+  width: 100%;
 }
 
 .header-text {
@@ -43,9 +54,13 @@ body {
   background-color: #000!important;
 }
 
-.article {
-  padding-left: 2%;
-  padding-right: 2%;
+.row {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-right: 0px;
+  margin-left: 0px;
 }
 
 #footer {
