@@ -7,7 +7,7 @@ var svgHeight = 500;
 var margin = {
   top: 20,
   right: 40,
-  bottom: 80,
+  bottom: 95,
   left: 100
 };
 
@@ -263,7 +263,6 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
     .attr("dy", "1em")
     .attr("value", "healthcare")
     .classed("active", true)
-    .classed("aText", true)
     .text("Lacks Healthcare (%)");
 
   var smokesLabel = yLabelsGroup.append("text")
@@ -273,7 +272,6 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
     .attr("dy", "1em")
     .attr("value", "smokes")
     .classed("inactive", true)
-    .classed("aText", true)
     .text("Smokes (%)");
 
   var obeseLabel = yLabelsGroup.append("text")
@@ -283,7 +281,6 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
     .attr("dy", "1em")
     .attr("value", "obesity")
     .classed("inactive", true)
-    .classed("aText", true)
     .text("Obese (%)");
 
   // Updatetooltip function above CSV import
