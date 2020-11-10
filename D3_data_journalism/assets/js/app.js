@@ -1,8 +1,8 @@
   // ------------ //
  // Set up chart //
 // ------------ //
-var svgWidth = 900;
-var svgHeight = 600;
+var svgWidth = 700;
+var svgHeight = 500;
 
 var margin = {
   top: 20,
