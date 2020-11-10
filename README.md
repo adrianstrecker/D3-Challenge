@@ -1,4 +1,8 @@
-# D3 Homework - Data Journalism and D3
+# D3 Challenge
+
+Description of this project is below while the site can be accessed <a href="https://adrianstrecker.github.io/D3-Challenge/D3_data_journalism/index.html">here</a>
+
+# Data Journalism and D3
 
 ![Newsroom](https://media.giphy.com/media/v2xIous7mnEYg/giphy.gif)
 
