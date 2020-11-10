@@ -123,14 +123,14 @@ function renderYText(circlesGroup, newYScale, chosenYAxis) {
   // Transition text on y-axis
   circlesGroup.transition()
     .duration(800)
-    .attr("dy", d => newYScale(d[chosenYAxis])+5);
+    .attr("dy", d => newYScale(d[chosenYAxis])+3);
   return circlesGroup;
 }
 
   // -------------------------------------------------------- //
  // Create function to update circles group with new tooltip //
 // -------------------------------------------------------- //
-function updatetooltip(chosenXAxis, circles) {
+function updatetooltip(chosenXAxis, circlesGroup) {
   // Create label variable for axis changes
   var label;
   // 
@@ -151,17 +151,17 @@ function updatetooltip(chosenXAxis, circles) {
       return (`${d.state}<br>Poverty: ${d.poverty}%<br>Obesity: ${d.obesity}%`);
     });
   // Call tooltip on selection
-  circles.call(tooltip);
+  circlesGroup.call(tooltip);
   
   // Show tooltip on hover/mouseover  
-  circles.on("mouseover", function(data) {
+  circlesGroup.on("mouseover", function(data) {
     tooltip.show(data, this);
   })
     // Hide tooltip on mouseout
     .on("mouseout", function(data) {
       tooltip.hide(data);
     });
-  return circles; 
+  return circlesGroup; 
 }
 
   // --------------------------------------------------------------- //
@@ -224,7 +224,7 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
     .classed("stateText", true)
     .text(function(d) {
       return d.abbr;
-    });
+    })
     
   // Create group for x-axis labels
   var xLabelsGroup = chartGroup.append("g")
