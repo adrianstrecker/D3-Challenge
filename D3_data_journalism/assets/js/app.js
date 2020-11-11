@@ -8,7 +8,7 @@ var margin = {
   top: 20,
   right: 40,
   bottom: 95,
-  left: 100
+  left: 75
 };
 
 var width = svgWidth - margin.left - margin.right;
@@ -268,7 +268,7 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
   // Create y-axis labels
   var healthcareLabel = yLabelsGroup.append("text")
     .attr("transform", "rotate(-90)")
-    .attr("y", 0 - margin.left+50)
+    .attr("y", 0 - margin.left+35)
     .attr("x", 0 - (height / 2))
     .attr("dy", "1em")
     .attr("value", "healthcare")
@@ -277,7 +277,7 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
 
   var smokesLabel = yLabelsGroup.append("text")
     .attr("transform", "rotate(-90)")
-    .attr("y", 0 - margin.left+35)
+    .attr("y", 0 - margin.left+20)
     .attr("x", 0 - (height / 2))
     .attr("dy", "1em")
     .attr("value", "smokes")
@@ -286,7 +286,7 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
 
   var obeseLabel = yLabelsGroup.append("text")
     .attr("transform", "rotate(-90)")
-    .attr("y", 0 - margin.left+20)
+    .attr("y", 0 - margin.left+5)
     .attr("x", 0 - (height / 2))
     .attr("dy", "1em")
     .attr("value", "obesity")
