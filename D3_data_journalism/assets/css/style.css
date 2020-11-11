@@ -52,6 +52,8 @@ hr {
 
 .dark-bg {
   background-color: #000!important;
+  font-family: 'Cinzel', cursive;
+  color: #fff;
 }
 
 .row {
@@ -68,7 +70,7 @@ hr {
   bottom: 0;
   width: 100%;
   padding-top: 10px;
-  padding-bottom: 10px;
+  padding-bottom: 0px;
   text-align: center;
 }
 

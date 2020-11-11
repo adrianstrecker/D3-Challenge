@@ -1,7 +1,7 @@
   // ------------ //
  // Set up chart //
 // ------------ //
-var svgWidth = 700;
+var svgWidth = 900;
 var svgHeight = 500;
 
 var margin = {
@@ -250,14 +250,14 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
 
   var ageLabel = xLabelsGroup.append("text")
     .attr("x", 0)
-    .attr("y", 40)
+    .attr("y", 35)
     .attr("value", "age") // value to grab for event listener
     .classed("inactive", true)
     .text("Age (Median)");
 
   var incomeLabel = xLabelsGroup.append("text")
     .attr("x", 0)
-    .attr("y", 60)
+    .attr("y", 50)
     .attr("value", "income") // value to grab for event listener
     .classed("inactive", true)
     .text("Household Income (Median)");
@@ -277,7 +277,7 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
 
   var smokesLabel = yLabelsGroup.append("text")
     .attr("transform", "rotate(-90)")
-    .attr("y", 0 - margin.left+25)
+    .attr("y", 0 - margin.left+35)
     .attr("x", 0 - (height / 2))
     .attr("dy", "1em")
     .attr("value", "smokes")
@@ -286,7 +286,7 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
 
   var obeseLabel = yLabelsGroup.append("text")
     .attr("transform", "rotate(-90)")
-    .attr("y", 0 - margin.left)
+    .attr("y", 0 - margin.left+20)
     .attr("x", 0 - (height / 2))
     .attr("dy", "1em")
     .attr("value", "obesity")
