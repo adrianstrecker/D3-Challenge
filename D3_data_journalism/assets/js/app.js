@@ -228,6 +228,7 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
     .attr("opacity", "1")
 
   // Create text to display in circles
+  // Andrew Reid at https://stackoverflow.com/questions/47401647/add-label-text-to-d3-circles
   var circleLabels = circlesGroup.append("text")
     .attr("dx", d => xLinearScale(d[chosenXAxis]))
     .attr("dy", d => yLinearScale(d[chosenYAxis])+3)
