@@ -112,7 +112,7 @@ function renderXText(circlesGroup, newXScale, chosenXAxis) {
   // Transition text on x-axis
   circlesGroup.transition()
     .duration(800)
-    .attr("dx", d => newXScale(d[chosenXAxis]));
+    .attr("x", d => newXScale(d[chosenXAxis]));
   return circlesGroup;
 }
 
@@ -123,7 +123,7 @@ function renderYText(circlesGroup, newYScale, chosenYAxis) {
   // Transition text on y-axis
   circlesGroup.transition()
     .duration(800)
-    .attr("dy", d => newYScale(d[chosenYAxis])+3);
+    .attr("y", d => newYScale(d[chosenYAxis])+3);
   return circlesGroup;
 }
 
@@ -230,8 +230,8 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
   // Create text to display in circles
   // Andrew Reid at https://stackoverflow.com/questions/47401647/add-label-text-to-d3-circles
   var circleLabels = circlesGroup.append("text")
-    .attr("dx", d => xLinearScale(d[chosenXAxis]))
-    .attr("dy", d => yLinearScale(d[chosenYAxis])+3)
+    .attr("x", d => xLinearScale(d[chosenXAxis]))
+    .attr("y", d => yLinearScale(d[chosenYAxis])+3)
     .classed("stateText", true)
     .text(function(d) {
       return d.abbr;
