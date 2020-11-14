@@ -269,27 +269,30 @@ d3.csv("assets/js/data.csv").then(function(dataInfo, err) {
   // Create y-axis labels
   var healthcareLabel = yLabelsGroup.append("text")
     .attr("transform", "rotate(-90)")
-    .attr("y", 0 - margin.left+35)
+    .attr("y", 0 - margin.left+30)
     .attr("x", 0 - (height / 2))
     .attr("dy", "1em")
+    .attr("font-size", "14pt")
     .attr("value", "healthcare")
     .classed("active", true)
     .text("Lacks Healthcare (%)");
 
   var smokesLabel = yLabelsGroup.append("text")
     .attr("transform", "rotate(-90)")
-    .attr("y", 0 - margin.left+20)
+    .attr("y", 0 - margin.left+15)
     .attr("x", 0 - (height / 2))
     .attr("dy", "1em")
+    .attr("font-size", "14pt")
     .attr("value", "smokes")
     .classed("inactive", true)
     .text("Smokes (%)");
 
   var obeseLabel = yLabelsGroup.append("text")
     .attr("transform", "rotate(-90)")
-    .attr("y", 0 - margin.left+5)
+    .attr("y", 0 - margin.left)
     .attr("x", 0 - (height / 2))
     .attr("dy", "1em")
+    .attr("font-size", "14pt")
     .attr("value", "obesity")
     .classed("inactive", true)
     .text("Obese (%)");
